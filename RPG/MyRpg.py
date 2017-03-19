@@ -15,16 +15,16 @@ class InitGame:
         pygame.display.set_caption("Battle")
         # Sprite group
         self.hero_group = pygame.sprite.Group()
-        self.bottom_group = pygame.sprite.Group()
+        self.all_groud = pygame.sprite.Group()
         # General loop
         self.start_game()
 
     def start_game(self):
         self.left = False
         self.right = False
-        self.wizard = Wizard(10, 650)
+        self.wizard = Wizard(10, 350)
         self.hero_group.add(self.wizard)
-        create_bottom(self.bottom_group)
+        create_bottom(self.all_groud)
         while True:
             for event in pygame.event.get():
                 if event.type == QUIT:
@@ -43,8 +43,9 @@ class InitGame:
                         self.right = False
 
             self.screen.fill((80,114,153))
-            self.bottom_group.draw(self.screen)
+            self.all_groud.draw(self.screen)
             self.wizard.update(self.left, self.right)
+            self.wizard.collide(self.all_groud)
             self.hero_group.draw(self.screen)
             pygame.display.flip()
 
