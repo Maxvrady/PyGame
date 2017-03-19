@@ -1,32 +1,30 @@
 from pygame.sprite import Sprite, collide_rect
 from pygame import Surface
+from .animations import WIZARD_LEFT, WIZARD_RIGHT
 import pyganim
 
-SPEED = 15
+JUMP_SPEED = 10
+SPEED = 7
 GRAVITY = 0.4
-
-
-animation_delay = 1
-animation_stay = [('RPG/item/pass_hero/pass_hero.png', animation_delay)]
-animation_left = [('RPG/item/move_hero/move_left.png', animation_delay)]
 
 
 class Wizard(Sprite):
     def __init__(self, x, y):
         Sprite.__init__(self)
-        self.image = Surface((64, 76))
+        self.image = Surface((49, 80))
         self.rect = self.image.get_rect()
+        self.image.set_colorkey((255,255,255))
         self.x_vel = 0
         self.y_vel = 0
         self.onGround = False
         self.rect.x = x
         self.rect.y = y
 
-        self.pass_anim = pyganim.PygAnimation(animation_stay)
-        self.pass_anim.play()
+        self.moveLeft_anim = pyganim.PygAnimation(WIZARD_LEFT)
+        self.moveLeft_anim.play()
 
-        self.left_anim = pyganim.PygAnimation(animation_left)
-        self.left_anim.play()
+        self.moveRight_anim = pyganim.PygAnimation(WIZARD_RIGHT)
+        self.moveRight_anim.play()
 
     def update(self, left, right):
         if left:
@@ -40,11 +38,9 @@ class Wizard(Sprite):
             self.rect.y += self.y_vel
 
         if self.x_vel < 0:
-            self.left_anim.blit(self.image)
+            self.moveLeft_anim.blit(self.image)
         if self.x_vel > 0:
-            self.pass_anim.blit(self.image)
-        if self.x_vel == 0:
-            self.pass_anim.blit(self.image)
+            self.moveRight_anim.blit(self.image)
 
     def collide_x(self):
         if self.x_vel > 0 and self.rect.x > 1300:
@@ -60,3 +56,9 @@ class Wizard(Sprite):
                     self.onGround = True
                     self.y_vel = 0
 
+    def jump(self):
+        if self.onGround:
+            self.y_vel = -JUMP_SPEED
+            for i in range(3):
+                self.rect.y += self.y_vel
+        self.onGround = False

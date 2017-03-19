@@ -34,6 +34,8 @@ class InitGame:
                         self.left = True
                     if event.key == K_RIGHT:
                         self.right = True
+                    if event.key == K_UP:
+                        self.wizard.jump()
 
                 if event.type == KEYUP:
                     if event.key == K_LEFT:
