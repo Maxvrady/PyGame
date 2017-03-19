@@ -1,9 +1,7 @@
 from sys import exit
-
 import pygame
 from my_gui.PyGame.RPG.heros import Wizard
 from pygame.locals import *
-
 from my_gui.PyGame.RPG.make_level import create_bottom
 
 
@@ -20,6 +18,7 @@ class InitGame:
         self.start_game()
 
     def start_game(self):
+        self.clock = pygame.time.Clock()
         self.left = False
         self.right = False
         self.wizard = Wizard(10, 350)
@@ -39,15 +38,19 @@ class InitGame:
                 if event.type == KEYUP:
                     if event.key == K_LEFT:
                         self.left = False
+                        self.wizard.x_vel = 0
                     if event.key == K_RIGHT:
                         self.right = False
+                        self.wizard.x_vel = 0
 
             self.screen.fill((80,114,153))
             self.all_groud.draw(self.screen)
             self.wizard.update(self.left, self.right)
-            self.wizard.collide(self.all_groud)
+            self.wizard.collide_x()
+            self.wizard.collide_y(self.all_groud)
             self.hero_group.draw(self.screen)
             pygame.display.flip()
+            self.clock.tick(60)
 
 
 if __name__ == '__main__':
