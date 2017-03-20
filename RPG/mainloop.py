@@ -12,18 +12,25 @@ class InitGame:
         self.screen = pygame.display.set_mode((1400, 900), FULLSCREEN)
         pygame.display.set_caption("Battle")
         # Sprite group
+        self.block_group = pygame.sprite.Group()
+        self.all_elements = pygame.sprite.Group()
         self.hero_group = pygame.sprite.Group()
-        self.all_groud = pygame.sprite.Group()
+        # Skill group
+        self.skill_group = pygame.sprite.Group()
         # General loop
         self.start_game()
 
     def start_game(self):
         self.clock = pygame.time.Clock()
+        # Class trigger
         self.left = False
         self.right = False
+        # Create wizard
         self.wizard = Wizard(10, 350)
         self.hero_group.add(self.wizard)
-        create_bottom(self.all_groud)
+        self.all_elements.add(self.wizard)
+        # Create bottom
+        create_bottom(self.all_elements, self.block_group)
         while True:
             for event in pygame.event.get():
                 if event.type == QUIT:
@@ -36,6 +43,10 @@ class InitGame:
                         self.right = True
                     if event.key == K_UP:
                         self.wizard.jump()
+                    if event.key == K_SPACE:
+                        self.wizard.attack()
+                    if event.key == K_1:
+                        self.wizard.activation_skill(0, self.skill_group)
 
                 if event.type == KEYUP:
                     if event.key == K_LEFT:
@@ -45,14 +56,16 @@ class InitGame:
                         self.right = False
                         self.wizard.x_vel = 0
 
+            # Background color
             self.screen.fill((80,114,153))
-            self.all_groud.draw(self.screen)
+            # Draw all
+            self.skill_group.draw(self.screen)
+            self.all_elements.draw(self.screen)
             self.wizard.update(self.left, self.right)
-            self.wizard.collide_x()
-            self.wizard.collide_y(self.all_groud)
-            self.hero_group.draw(self.screen)
+            self.wizard.collide_y(self.block_group)
+            self.wizard.collide_x(self.block_group)
+            self.clock.tick(70)
             pygame.display.flip()
-            self.clock.tick(60)
 
 
 if __name__ == '__main__':
