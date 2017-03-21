@@ -1,9 +1,9 @@
 from pygame.sprite import Sprite
 from pygame import Surface
 import pyganim
-from .animations import FAIR_BALL_PASS
+from .animations import FAIR_BALL_LEFT, FAIR_BALL_RIGHT
 
-SKILL_SPEED = 15
+SKILL_SPEED = 20
 
 
 class BluFairBall(Sprite):
@@ -17,23 +17,21 @@ class BluFairBall(Sprite):
         self.x_vel = 0
         self.attacks = False
 
-        self.Anim = pyganim.PygAnimation(FAIR_BALL_PASS)
-        self.Anim.play()
+        self.AnimLeft = pyganim.PygAnimation(FAIR_BALL_LEFT)
+        self.AnimLeft.play()
+
+        self.AnimRight = pyganim.PygAnimation(FAIR_BALL_RIGHT)
+        self.AnimRight.play()
 
     def update(self, x, y):
-        self.image.fill((255, 255, 255))
-        self.Anim.blit(self.image)
         if not self.attacks:
             self.rect.x = x
             self.rect.y = y
         else:
-            self.rect.x += self.x_vel
-            if self.x_vel > 0 and self.rect.right > 1400:
-                self.attacks = False
-            if self.x_vel < 0 and self.rect.x < 0:
-                self.attacks = False
-            if self.x_vel == 0:
-                self.attacks = False
+            if self.x_vel > 0:
+                self.rect.x += SKILL_SPEED
+            if self.x_vel < 0:
+                self.rect.x += -SKILL_SPEED
 
     def attack(self, hero_xvel):
         if not self.attacks:

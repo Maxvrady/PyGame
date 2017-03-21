@@ -34,6 +34,7 @@ class BaseClass(Sprite):
         self.passAnim.play()
 
     def update(self, left, right):
+        # Move
         if left:
             self.x_vel = -SPEED
             self.rect.x += self.x_vel
@@ -43,14 +44,14 @@ class BaseClass(Sprite):
         if not self.onGround:
             self.y_vel += GRAVITY
             self.rect.y += self.y_vel
-
+        # Animation
         if self.x_vel < 0:
             self.moveLeft_anim.blit(self.image)
         if self.x_vel > 0:
             self.moveRight_anim.blit(self.image)
         if self.x_vel == 0:
             self.passAnim.blit(self.image)
-
+        # Update skill
         if self.skill_active:
             self.skill_active.update(self.rect.x, self.rect.y)
 
@@ -91,7 +92,8 @@ class BaseClass(Sprite):
             skill_group.add(self.skill_active)
 
     def attack(self):
-        self.skill_active.attack(self.x_vel)
+        if self.skill_active:
+            self.skill_active.attack(self.x_vel)
 
 from .skills import BluFairBall
 

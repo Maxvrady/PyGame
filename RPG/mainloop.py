@@ -22,7 +22,7 @@ class InitGame:
 
     def start_game(self):
         self.clock = pygame.time.Clock()
-        # Class trigger
+        # Hero trigger
         self.left = False
         self.right = False
         # Create wizard
