@@ -34,3 +34,6 @@ FAIR_BALL_RIGHT = [('RPG/item/wizard/fairball0/stage0.png', ANIMATIONS_DELAY),
                   ('RPG/item/wizard/fairball0/stage3.png', ANIMATIONS_DELAY),
                   ('RPG/item/wizard/fairball0/stage4.png', ANIMATIONS_DELAY),
                   ('RPG/item/wizard/fairball0/stage5.png', ANIMATIONS_DELAY),]
+
+# Dark ball animation
+DARK_BALL = [('RPG/item/wizard/darkball/stage0.png', ANIMATIONS_DELAY),]

@@ -26,7 +26,7 @@ class InitGame:
         self.left = False
         self.right = False
         # Create wizard
-        self.wizard = Wizard(10, 350)
+        self.wizard = Wizard(10, 350, self.screen)
         self.hero_group.add(self.wizard)
         self.all_elements.add(self.wizard)
         # Create bottom
@@ -46,7 +46,9 @@ class InitGame:
                     if event.key == K_SPACE:
                         self.wizard.attack()
                     if event.key == K_1:
-                        self.wizard.activation_skill(0, self.skill_group)
+                        self.wizard.activation_skill(0, self.skill_group, self.screen, self.all_elements)
+                    if event.key == K_2:
+                        self.wizard.activation_skill(1, self.skill_group, self.screen, self.all_elements)
 
                 if event.type == KEYUP:
                     if event.key == K_LEFT:
@@ -59,7 +61,6 @@ class InitGame:
             # Background color
             self.screen.fill((80,114,153))
             # Draw all
-            self.skill_group.draw(self.screen)
             self.all_elements.draw(self.screen)
             self.wizard.update(self.left, self.right)
             self.wizard.collide_y(self.block_group)
@@ -69,4 +70,4 @@ class InitGame:
 
 
 if __name__ == '__main__':
-    InitGame()
+    game = InitGame()
