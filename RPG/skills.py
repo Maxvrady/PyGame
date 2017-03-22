@@ -58,7 +58,7 @@ class DarkBall(BluFairBall):
         BluFairBall.__init__(self)
         self.image = Surface((50, 53))
         self.image.set_colorkey((255, 255, 255))
-
+        self.icon_path = 'RPG/item/wizard/icon/stage1.png'
         self.AnimLeft = pyganim.PygAnimation(DARK_BALL)
         self.AnimLeft.play()
 

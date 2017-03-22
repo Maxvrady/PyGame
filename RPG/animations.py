@@ -20,7 +20,7 @@ WIZARD_RIGHT = [('RPG/item/wizard/move_right/stage0.png', ANIMATIONS_DELAY),
 
 WIZARD_PASS = [('RPG/item/wizard/pass/stage0.png', ANIMATIONS_DELAY),]
 
-# Fair ball animation
+# Fair ball animations
 FAIR_BALL_LEFT = [('RPG/item/wizard/fairball/stage0.png', ANIMATIONS_DELAY),
                   ('RPG/item/wizard/fairball/stage1.png', ANIMATIONS_DELAY),
                   ('RPG/item/wizard/fairball/stage2.png', ANIMATIONS_DELAY),
@@ -35,5 +35,5 @@ FAIR_BALL_RIGHT = [('RPG/item/wizard/fairball0/stage0.png', ANIMATIONS_DELAY),
                   ('RPG/item/wizard/fairball0/stage4.png', ANIMATIONS_DELAY),
                   ('RPG/item/wizard/fairball0/stage5.png', ANIMATIONS_DELAY),]
 
-# Dark ball animation
+# Dark ball animations
 DARK_BALL = [('RPG/item/wizard/darkball/stage0.png', ANIMATIONS_DELAY),]

@@ -99,7 +99,8 @@ class BaseClass(Sprite):
     def activation_skill(self, key, skill_group, screen, all_group):
         self.skill_active = self.skill[key]
         self.skill_group = skill_group
-        self.spell_icon = IconOfSpell(self.skill_active.icon_path)
+        if not self.spell_icon:
+            self.spell_icon = IconOfSpell(self.skill_active.icon_path)
         all_group.add(self.spell_icon)
         self.screen = screen
         if not (self.skill_active == None):
