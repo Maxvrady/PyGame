@@ -1,4 +1,13 @@
-ANIMATIONS_DELAY = 100
+ANIMATIONS_DELAY = 1000
+# Explode animations
+EXPLODE = [('RPG/item/explode/stage0.png', ANIMATIONS_DELAY),
+           ('RPG/item/explode/stage1.png', ANIMATIONS_DELAY),
+           ('RPG/item/explode/stage2.png', ANIMATIONS_DELAY),
+           ('RPG/item/explode/stage3.png', ANIMATIONS_DELAY),
+           ('RPG/item/explode/stage4.png', ANIMATIONS_DELAY),
+           ('RPG/item/explode/stage5.png', ANIMATIONS_DELAY),]
+# Dead
+DEAD = [('RPG/item/dead/stage0.png', ANIMATIONS_DELAY)]
 # Wizard animations
 WIZARD_LEFT = [('RPG/item/wizard/move_left/stage0.png', ANIMATIONS_DELAY),
                ('RPG/item/wizard/move_left/stage1.png', ANIMATIONS_DELAY),

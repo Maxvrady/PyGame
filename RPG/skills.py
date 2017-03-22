@@ -1,8 +1,8 @@
-from pygame.sprite import Sprite
+from pygame.sprite import Sprite, collide_rect
 from pygame import Surface
 from pygame.image import load
 import pyganim
-from .animations import FAIR_BALL_LEFT, FAIR_BALL_RIGHT, DARK_BALL
+from .animations import FAIR_BALL_LEFT, FAIR_BALL_RIGHT, DARK_BALL, EXPLODE
 
 SKILL_SPEED = 20
 
@@ -11,7 +11,7 @@ class BluFairBall(Sprite):
     def __init__(self):
         Sprite.__init__(self)
         self.image = Surface((100, 38))
-        self.image.set_colorkey((255, 255, 255))
+        # self.image.set_colorkey((255, 255, 255))
         self.rect = self.image.get_rect()
         self.rect.x = 10
         self.rect.y = 10
@@ -24,6 +24,12 @@ class BluFairBall(Sprite):
         # Right anim.
         self.AnimRight = pyganim.PygAnimation(FAIR_BALL_RIGHT)
         self.AnimRight.play()
+        # Explode animation
+        self.explodeAnim = pyganim.PygAnimation(EXPLODE)
+        # Target
+        self.target = None
+        # Damage
+        self.damage = 20
 
     def update(self, x, y):
         if not self.attacks:
@@ -32,6 +38,13 @@ class BluFairBall(Sprite):
             return False
         else:
             self.image.fill((80,114,153))
+            if self.target:
+                if collide_rect(self, self.target):
+                    self.explodeAnim.play()
+                    self.explodeAnim.blit(self.image)
+                    self.target.hero_damage(self.damage)
+                    self.attacks = False
+
             if self.x_vel > 0:
                 self.rect.x += SKILL_SPEED
                 self.AnimRight.blit(self.image)
@@ -45,7 +58,8 @@ class BluFairBall(Sprite):
                 self.attacks = False
             return True
 
-    def attack(self, hero_xvel):
+    def attack(self, hero_xvel, target):
+        self.target = target
         if hero_xvel == 0:
             return False
         if not self.attacks:

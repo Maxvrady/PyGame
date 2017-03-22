@@ -1,6 +1,6 @@
 from pygame.sprite import Sprite, collide_rect
 from pygame import Surface
-from .animations import WIZARD_LEFT, WIZARD_RIGHT, WIZARD_PASS
+from .animations import WIZARD_LEFT, WIZARD_RIGHT, WIZARD_PASS, DEAD
 from .bars import IconOfSpell
 import pyganim
 from .skills import BluFairBall, DarkBall
@@ -24,6 +24,8 @@ class BaseClass(Sprite):
         self.onGround = False
         self.rect.x = x
         self.rect.y = y
+        # All group
+        self.all_group = None
         # Skill
         self.skill_active = None
         self.skill = skill
@@ -39,31 +41,41 @@ class BaseClass(Sprite):
         # Stay animation
         self.passAnim = pyganim.PygAnimation(WIZARD_PASS)
         self.passAnim.play()
+        # Dead animation
+        self.deadAnim = pyganim.PygAnimation(DEAD)
+        self.deadAnim.play()
+        # Health
+        self.health = 100
+        self.dead = False
 
     def update(self, left, right):
-        # Move
-        if left:
-            self.x_vel = -SPEED
-            self.rect.x += self.x_vel
-        if right:
-            self.x_vel = SPEED
-            self.rect.x += self.x_vel
-        if not self.onGround:
-            self.y_vel += GRAVITY
-            self.rect.y += self.y_vel
-        # Animation
-        if self.x_vel < 0:
-            self.moveLeft_anim.blit(self.image)
-        if self.x_vel > 0:
-            self.moveRight_anim.blit(self.image)
-        if self.x_vel == 0:
-            self.passAnim.blit(self.image)
-        if not self.spell_icon == None:
-            self.spell_icon.update(self.rect.x, self.rect.y, self.skill_active)
-        # Update skill
-        if self.skill_active:
-                if self.skill_active.update(self.rect.x, self.rect.y):
-                    self.skill_group.draw(self.screen)
+        if not self.dead:
+            # Move
+            if left:
+                self.x_vel = -SPEED
+                self.rect.x += self.x_vel
+            if right:
+                self.x_vel = SPEED
+                self.rect.x += self.x_vel
+            if not self.onGround:
+                self.y_vel += GRAVITY
+                self.rect.y += self.y_vel
+            # Animation
+            if self.x_vel < 0:
+                self.moveLeft_anim.blit(self.image)
+            if self.x_vel > 0:
+                self.moveRight_anim.blit(self.image)
+            if self.x_vel == 0:
+                self.passAnim.blit(self.image)
+            if not self.spell_icon == None:
+                self.spell_icon.update(self.rect.x, self.rect.y, self.skill_active)
+            # Update skill
+            if self.skill_active:
+                    if self.skill_active.update(self.rect.x, self.rect.y):
+                        self.skill_group.draw(self.screen)
+        else:
+            self.image.fill((80,114,153))
+            self.deadAnim.blit(self.image)
 
     def collide_x(self, ground):
         for pl in ground:
@@ -96,25 +108,31 @@ class BaseClass(Sprite):
                 self.rect.y += self.y_vel
         self.onGround = False
 
+    def hero_damage(self, damage):
+        self.health -= damage
+        if self.health < 0:
+            self.dead = True
+
     def activation_skill(self, key, skill_group, screen, all_group):
         self.skill_active = self.skill[key]
         self.skill_group = skill_group
+        self.all_group = all_group
         if not self.spell_icon:
             self.spell_icon = IconOfSpell(self.skill_active.icon_path)
-        all_group.add(self.spell_icon)
+        self.all_group.add(self.spell_icon)
         self.screen = screen
         if not (self.skill_active == None):
             self.skill_group.empty()
             self.skill_group.add(self.skill_active)
 
-    def attack(self):
+    def attack(self, target):
         if self.skill_active:
-            self.skill_active.attack(self.x_vel)
+            self.skill_active.attack(self.x_vel, target)
 
 
 class Wizard(BaseClass):
     """Wizard class"""
-    def __init__(self, x, y, screen):
+    def __init__(self, x, y):
         """Class skills"""
         fairball = BluFairBall()
         darkball = DarkBall()
