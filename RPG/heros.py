@@ -21,7 +21,6 @@ class BaseClass(Sprite):
         self.image.set_colorkey((255,255,255))
         self.x_vel = 0
         self.y_vel = 0
-        self.onGround = False
         self.rect.x = x
         self.rect.y = y
         # All group
@@ -47,19 +46,27 @@ class BaseClass(Sprite):
         # Health
         self.health = 100
         self.dead = False
+        # Jump trigger
+        self.jump_stage = False
+        # On ground
+        self.onGround = False
 
-    def update(self, left, right):
+    def update(self, left, right, block_group):
         if not self.dead:
             # Move
             if left:
                 self.x_vel = -SPEED
-                self.rect.x += self.x_vel
             if right:
                 self.x_vel = SPEED
-                self.rect.x += self.x_vel
+            if not(left or right):
+                self.x_vel = 0
             if not self.onGround:
                 self.y_vel += GRAVITY
-                self.rect.y += self.y_vel
+            # Update hero
+            self.rect.x += self.x_vel
+            self.collide_x(block_group)
+            self.rect.y += self.y_vel
+            self.collide_y(block_group)
             # Animation
             if self.x_vel < 0:
                 self.moveLeft_anim.blit(self.image)
@@ -67,14 +74,16 @@ class BaseClass(Sprite):
                 self.moveRight_anim.blit(self.image)
             if self.x_vel == 0:
                 self.passAnim.blit(self.image)
-            if not self.spell_icon == None:
+            if self.spell_icon:
                 self.spell_icon.update(self.rect.x, self.rect.y, self.skill_active)
             # Update skill
             if self.skill_active:
                     if self.skill_active.update(self.rect.x, self.rect.y):
                         self.skill_group.draw(self.screen)
+            if not self.jump_stage:
+                self.onGround = False
         else:
-            self.image.fill((80,114,153))
+            self.image.fill((80, 114, 153))
             self.deadAnim.blit(self.image)
 
     def collide_x(self, ground):
@@ -85,8 +94,8 @@ class BaseClass(Sprite):
                 if self.x_vel < 0:
                     self.rect.left = pl.rect.right
 
-        if self.x_vel > 0 and self.rect.x > 1300:
-            self.rect.x = 1300
+        if self.x_vel > 0 and self.rect.x > 1350:
+            self.rect.x = 1350
         if self.x_vel < 0 and self.rect.x < 0:
             self.rect.x = 0
 
@@ -95,18 +104,21 @@ class BaseClass(Sprite):
             if collide_rect(self, pl):
                 if self.y_vel > 0:
                     self.rect.bottom = pl.rect.top
-                    self.onGround = True
                     self.y_vel = 0
-                if self.y_vel < 0:
+                    self.onGround = True
+                if self.y_vel < 0 and self.onGround:
                     self.rect.top = pl.rect.bottom
-                    self.onGround = False
+                    self.y_vel = 0
 
     def jump(self):
         if self.onGround:
+            self.jump_stage = True
             self.y_vel = -JUMP_SPEED
-            for i in range(3):
+            for i in range(4):
                 self.rect.y += self.y_vel
-        self.onGround = False
+            self.y_vel = 0
+            self.onGround = False
+            self.jump_stage = False
 
     def hero_damage(self, damage):
         self.health -= damage

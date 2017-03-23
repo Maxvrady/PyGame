@@ -41,6 +41,7 @@ class BluFairBall(Sprite):
             if self.target:
                 if collide_rect(self, self.target):
                     self.explodeAnim.play()
+                    self.image.set_colorkey((255, 255, 255))
                     self.explodeAnim.blit(self.image)
                     self.target.hero_damage(self.damage)
                     self.attacks = False

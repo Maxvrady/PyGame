@@ -2,7 +2,7 @@ from sys import exit
 import pygame
 from my_gui.PyGame.RPG.heros import Wizard
 from pygame.locals import *
-from my_gui.PyGame.RPG.make_level import create_bottom
+from my_gui.PyGame.RPG.make_level import create_bottom, create_up_platform
 
 
 class InitGame:
@@ -23,6 +23,7 @@ class InitGame:
         self.start_game()
 
     def start_game(self):
+        # Time
         self.clock = pygame.time.Clock()
         # Player 1 trigger
         self.player1_left = False
@@ -40,6 +41,8 @@ class InitGame:
         self.all_elements.add(self.hero_player2)
         # Create bottom
         create_bottom(self.all_elements, self.block_group)
+        # Create up platform
+        create_up_platform(self.all_elements, self.block_group)
         while True:
 
             for event in pygame.event.get():
@@ -101,13 +104,9 @@ class InitGame:
             # Draw all
             self.all_elements.draw(self.screen)
             # Draw player 1
-            self.hero_player1.update(self.player1_left, self.player1_right)
-            self.hero_player1.collide_y(self.block_group)
-            self.hero_player1.collide_x(self.block_group)
+            self.hero_player1.update(self.player1_left, self.player1_right, self.block_group)
             # Draw player 2
-            self.hero_player2.update(self.player2_left, self.player2_right)
-            self.hero_player2.collide_y(self.block_group)
-            self.hero_player2.collide_x(self.block_group)
+            self.hero_player2.update(self.player2_left, self.player2_right, self.block_group)
             # FPS
             self.clock.tick(70)
             # Draw screen
