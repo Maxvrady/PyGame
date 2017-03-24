@@ -60,13 +60,17 @@ class BaseClass(Sprite):
                 self.x_vel = SPEED
             if not(left or right):
                 self.x_vel = 0
-            if not self.onGround:
-                self.y_vel += GRAVITY
+            if not self.jump_stage:
+                if not self.onGround:
+                    self.y_vel += GRAVITY
+            # Jump
+            if not self.jump_stage:
+                self.onGround = False
             # Update hero
-            self.rect.x += self.x_vel
-            self.collide_x(block_group)
             self.rect.y += self.y_vel
             self.collide_y(block_group)
+            self.rect.x += self.x_vel
+            self.collide_x(block_group)
             # Animation
             if self.x_vel < 0:
                 self.moveLeft_anim.blit(self.image)
@@ -78,10 +82,8 @@ class BaseClass(Sprite):
                 self.spell_icon.update(self.rect.x, self.rect.y, self.skill_active)
             # Update skill
             if self.skill_active:
-                    if self.skill_active.update(self.rect.x, self.rect.y):
-                        self.skill_group.draw(self.screen)
-            if not self.jump_stage:
-                self.onGround = False
+                if self.skill_active.update(self.rect.x, self.rect.y):
+                    self.skill_group.draw(self.screen)
         else:
             self.image.fill((80, 114, 153))
             self.deadAnim.blit(self.image)
@@ -104,9 +106,8 @@ class BaseClass(Sprite):
             if collide_rect(self, pl):
                 if self.y_vel > 0:
                     self.rect.bottom = pl.rect.top
-                    self.y_vel = 0
                     self.onGround = True
-                if self.y_vel < 0 and self.onGround:
+                if self.y_vel < 0:
                     self.rect.top = pl.rect.bottom
                     self.y_vel = 0
 
@@ -114,9 +115,8 @@ class BaseClass(Sprite):
         if self.onGround:
             self.jump_stage = True
             self.y_vel = -JUMP_SPEED
-            for i in range(4):
+            for i in range(5):
                 self.rect.y += self.y_vel
-            self.y_vel = 0
             self.onGround = False
             self.jump_stage = False
 
