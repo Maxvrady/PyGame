@@ -2,6 +2,7 @@ from pygame.sprite import Sprite, collide_rect
 from pygame import Surface
 from .animations import WIZARD_LEFT, WIZARD_RIGHT, WIZARD_PASS, DEAD
 from .bars import IconOfSpell
+from pygame.font import SysFont
 import pyganim
 from .skills import BluFairBall, DarkBall
 from pygame.image import load
@@ -13,9 +14,9 @@ GRAVITY = 0.4
 
 
 class BaseClass(Sprite):
-    def __init__(self,x, y, skill):
+    def __init__(self,x, y, skill, screen):
         Sprite.__init__(self)
-        self.screen = None
+        self.screen = screen
         self.image = Surface((49, 80))
         self.rect = self.image.get_rect()
         self.image.set_colorkey((255,255,255))
@@ -50,9 +51,12 @@ class BaseClass(Sprite):
         self.jump_stage = False
         # On ground
         self.onGround = False
+        # Font for display health
+        self.my_font = SysFont("None", 20, True)
 
     def update(self, left, right, block_group):
         if not self.dead:
+            self.render = self.my_font.render(str(self.health), True, (209,33,34))
             # Move
             if left:
                 self.x_vel = -SPEED
@@ -72,6 +76,8 @@ class BaseClass(Sprite):
             self.rect.x += self.x_vel
             self.collide_x(block_group)
             # Animation
+            if self.screen:
+                self.screen.blit(self.render, (self.rect.x + 15, self.rect.y - 80))
             if self.x_vel < 0:
                 self.moveLeft_anim.blit(self.image)
             if self.x_vel > 0:
@@ -122,7 +128,7 @@ class BaseClass(Sprite):
 
     def hero_damage(self, damage):
         self.health -= damage
-        if self.health < 0:
+        if self.health <= 0:
             self.dead = True
 
     def activation_skill(self, key, skill_group, screen, all_group):
@@ -132,7 +138,6 @@ class BaseClass(Sprite):
         if not self.spell_icon:
             self.spell_icon = IconOfSpell(self.skill_active.icon_path)
         self.all_group.add(self.spell_icon)
-        self.screen = screen
         if not (self.skill_active == None):
             self.skill_group.empty()
             self.skill_group.add(self.skill_active)
@@ -144,9 +149,9 @@ class BaseClass(Sprite):
 
 class Wizard(BaseClass):
     """Wizard class"""
-    def __init__(self, x, y):
+    def __init__(self, x, y, screen):
         """Class skills"""
         fairball = BluFairBall()
         darkball = DarkBall()
-        BaseClass.__init__(self, x, y, [fairball, darkball])
+        BaseClass.__init__(self, x, y, [fairball, darkball], screen)
 

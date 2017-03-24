@@ -2,7 +2,7 @@ from sys import exit
 import pygame
 from my_gui.PyGame.RPG.heros import Wizard
 from pygame.locals import *
-from my_gui.PyGame.RPG.make_level import create_bottom, create_up_platform
+from my_gui.PyGame.RPG.make_level import create_level
 
 
 class InitGame:
@@ -32,17 +32,15 @@ class InitGame:
         self.player2_left = False
         self.player2_right = False
         # Create player 1
-        self.hero_player1 = Wizard(10, 350)
+        self.hero_player1 = Wizard(700, 350, self.screen)
         self.player1.add(self.hero_player1)
         self.all_elements.add(self.hero_player1)
         # Create player 2
-        self.hero_player2 = Wizard(700, 350)
+        self.hero_player2 = Wizard(700, 350, self.screen)
         self.player2.add(self.hero_player2)
         self.all_elements.add(self.hero_player2)
         # Create bottom
-        create_bottom(self.all_elements, self.block_group)
-        # Create up platform
-        create_up_platform(self.all_elements, self.block_group)
+        create_level(self.all_elements, self.block_group)
         while True:
 
             for event in pygame.event.get():
