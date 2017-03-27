@@ -1,6 +1,6 @@
 from sys import exit
 import pygame
-from my_gui.PyGame.RPG.heros import Wizard
+from my_gui.PyGame.RPG.heros import Wizard, Archer
 from pygame.locals import *
 from my_gui.PyGame.RPG.make_level import create_level
 
@@ -32,7 +32,7 @@ class InitGame:
         self.player2_left = False
         self.player2_right = False
         # Create player 1
-        self.hero_player1 = Wizard(700, 350, self.screen)
+        self.hero_player1 = Archer(700, 350, self.screen)
         self.player1.add(self.hero_player1)
         self.all_elements.add(self.hero_player1)
         # Create player 2
@@ -60,9 +60,12 @@ class InitGame:
                     if event.key == K_SPACE:
                         self.hero_player1.attack(self.hero_player2)
                     if event.key == K_1:
-                        self.hero_player1.activation_skill(0, self.player1_skill_group, self.screen, self.all_elements)
+                        self.hero_player1.activation_skill(0, self.player1_skill_group, self.all_elements)
                     if event.key == K_2:
-                        self.hero_player1.activation_skill(1, self.player1_skill_group, self.screen, self.all_elements)
+                        self.hero_player1.activation_skill(1, self.player1_skill_group, self.all_elements)
+                    if event.key == K_F1:
+                        self.hero_player1.health = 100
+                        self.hero_player1.dead = False
 
                     # player 2 control
                     if event.key == K_LEFT:
@@ -72,11 +75,14 @@ class InitGame:
                     if event.key == K_UP:
                         self.hero_player2.jump()
                     if event.key == K_KP1:
-                        self.hero_player2.activation_skill(0, self.player2_skill_group, self.screen, self.all_elements)
+                        self.hero_player2.activation_skill(0, self.player2_skill_group, self.all_elements)
                     if event.key == K_KP2:
-                        self.hero_player2.activation_skill(1, self.player2_skill_group, self.screen, self.all_elements)
+                        self.hero_player2.activation_skill(1, self.player2_skill_group, self.all_elements)
                     if event.key == K_KP0:
                         self.hero_player2.attack(self.hero_player1)
+                    if event.key == K_F2:
+                        self.hero_player2.health = 100
+                        self.hero_player2.dead = False
 
                 # Player KEYUP
                 if event.type == KEYUP:
@@ -99,12 +105,12 @@ class InitGame:
 
             # Background color
             self.screen.fill((80,114,153))
-            # Draw all
-            self.all_elements.draw(self.screen)
             # Draw player 1
             self.hero_player1.update(self.player1_left, self.player1_right, self.block_group)
             # Draw player 2
             self.hero_player2.update(self.player2_left, self.player2_right, self.block_group)
+            # Draw all
+            self.all_elements.draw(self.screen)
             # FPS
             self.clock.tick(70)
             # Draw screen

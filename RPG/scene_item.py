@@ -33,10 +33,31 @@ class HellLeft(Sprite):
         self.rect.y = y
 
 
-class Tree(Sprite):
+class TreeOne(Sprite):
     def __init__(self, x, y):
         Sprite.__init__(self)
         self.image = load('RPG/item/ground/tree0.png')
+        self.image.set_colorkey((255, 255, 255))
         self.rect = self.image.get_rect()
         self.rect.x = x
-        self.rect.y = y
+        self.rect.y = y - 100
+
+
+class TreeTwo(TreeOne):
+    def __init__(self, x, y):
+        TreeOne.__init__(self, x, y - 50)
+        self.image = load('RPG/item/ground/tree1.png')
+        self.image.set_colorkey((255, 255, 255))
+
+
+class Bottom(HellCenter):
+    def __init__(self, x, y):
+        HellCenter.__init__(self, x, y)
+        self.image = load('RPG/item/ground/bottom.png')
+
+
+class Table(TreeOne):
+    def __init__(self, x, y):
+        TreeOne.__init__(self, x, y + 90)
+        self.image = load('RPG/item/ground/Table0.png')
+        self.image.set_colorkey((255, 255, 255))

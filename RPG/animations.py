@@ -46,3 +46,22 @@ FAIR_BALL_RIGHT = [('RPG/item/wizard/fairball0/stage0.png', ANIMATIONS_DELAY),
 
 # Dark ball animations
 DARK_BALL = [('RPG/item/wizard/darkball/stage0.png', ANIMATIONS_DELAY),]
+
+# Archer animations
+ARCHER_LEFT = [('RPG/item/archer/move_left/stage0.png', ANIMATIONS_DELAY),
+               ('RPG/item/archer/move_left/stage1.png', ANIMATIONS_DELAY),
+               ('RPG/item/archer/move_left/stage2.png', ANIMATIONS_DELAY),
+               ('RPG/item/archer/move_left/stage3.png', ANIMATIONS_DELAY),
+               ('RPG/item/archer/move_left/stage4.png', ANIMATIONS_DELAY),]
+
+ARCHER_RIGHT = [('RPG/item/archer/move_right/stage0.png', ANIMATIONS_DELAY),
+               ('RPG/item/archer/move_right/stage1.png', ANIMATIONS_DELAY),
+               ('RPG/item/archer/move_right/stage2.png', ANIMATIONS_DELAY),
+               ('RPG/item/archer/move_right/stage3.png', ANIMATIONS_DELAY),
+               ('RPG/item/archer/move_right/stage4.png', ANIMATIONS_DELAY),]
+
+ARCHER_PASS = [('RPG/item/archer/pass/stage0.png', ANIMATIONS_DELAY)]
+
+# Arrow animation
+ARROW_RIGHT = [('RPG/item/archer/arrow/stage0.png', ANIMATIONS_DELAY)]
+ARROW_LEFT = [('RPG/item/archer/arrow/stage1.png', ANIMATIONS_DELAY)]

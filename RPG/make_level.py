@@ -1,4 +1,4 @@
-from my_gui.PyGame.RPG.scene_item import HellCenter, HellLeft, HellRight, Tree
+from my_gui.PyGame.RPG.scene_item import HellCenter, HellLeft, HellRight, TreeOne, Bottom, TreeTwo, Table
 
 
 level = [
@@ -6,20 +6,20 @@ level = [
     "                            ",
     "               <------------",
     "                            ",
-    "                            ",
+    "     !                      ",
     "    <----->                 ",
     "                            ",
     "                            ",
     "  <>        <>              ",
     "                            ",
-    "             !              ",
+    "                    !       ",
     "     <----------------->    ",
     "                            ",
-    "                            ",
+    "  #                         ",
     " <------>                   ",
     "                            ",
-    "                            ",
-    "----------------------------"
+    "             *              ",
+    "_________________",
 ]
 
 
@@ -40,11 +40,20 @@ def create_level(all_group, block_group):
                 hell_right = HellRight(x, y)
                 all_group.add(hell_right)
                 block_group.add(hell_right)
-            # if num == "!":
-            #     tree = Tree(x, y)
-            #     all_group.add(tree)
+            if num == "!":
+                tree = TreeOne(x, y - 50)
+                all_group.add(tree)
+            if num == "*":
+                treeTwo = TreeTwo(x, y)
+                all_group.add(treeTwo)
+            if num == "_":
+                bottom = Bottom(x, y)
+                block_group.add(bottom)
+                all_group.add(bottom)
+                x += 36
+            if num == "#":
+                table = Table(x, y)
+                all_group.add(table)
             x += 50
         y += 50
         x = 0
-        print(len(level))
-        print(len(level[0]))

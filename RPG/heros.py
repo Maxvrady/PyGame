@@ -1,10 +1,10 @@
 from pygame.sprite import Sprite, collide_rect
 from pygame import Surface
-from .animations import WIZARD_LEFT, WIZARD_RIGHT, WIZARD_PASS, DEAD
+from .animations import WIZARD_LEFT, WIZARD_RIGHT, WIZARD_PASS, DEAD, ARCHER_LEFT, ARCHER_RIGHT, ARCHER_PASS
 from .bars import IconOfSpell
 from pygame.font import SysFont
 import pyganim
-from .skills import BluFairBall, DarkBall
+from .skills import BluFairBall, DarkBall, Arrow
 from pygame.image import load
 
 
@@ -56,6 +56,7 @@ class BaseClass(Sprite):
 
     def update(self, left, right, block_group):
         if not self.dead:
+            # Render font
             self.render = self.my_font.render(str(self.health), True, (209,33,34))
             # Move
             if left:
@@ -131,7 +132,7 @@ class BaseClass(Sprite):
         if self.health <= 0:
             self.dead = True
 
-    def activation_skill(self, key, skill_group, screen, all_group):
+    def activation_skill(self, key, skill_group, all_group):
         self.skill_active = self.skill[key]
         self.skill_group = skill_group
         self.all_group = all_group
@@ -154,4 +155,23 @@ class Wizard(BaseClass):
         fairball = BluFairBall()
         darkball = DarkBall()
         BaseClass.__init__(self, x, y, [fairball, darkball], screen)
+
+
+class Archer(BaseClass):
+    """Archer class"""
+    def __init__(self, x, y, screen):
+        """Class skills"""
+        arrow = Arrow()
+        darkball = DarkBall()
+        BaseClass.__init__(self, x, y, [darkball, arrow], screen)
+
+        # Left animation
+        self.moveLeft_anim = pyganim.PygAnimation(ARCHER_LEFT)
+        self.moveLeft_anim.play()
+        # Right animation
+        self.moveRight_anim = pyganim.PygAnimation(ARCHER_RIGHT)
+        self.moveRight_anim.play()
+        # Pass animation
+        self.passAnim = pyganim.PygAnimation(ARCHER_PASS)
+        self.passAnim.play()
 
