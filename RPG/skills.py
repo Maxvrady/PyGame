@@ -5,7 +5,6 @@ import pyganim
 from .animations import FAIR_BALL_LEFT, FAIR_BALL_RIGHT, DARK_BALL, EXPLODE, ARROW_LEFT, ARROW_RIGHT
 
 
-
 class BluFairBall(Sprite):
     def __init__(self):
         Sprite.__init__(self)
@@ -26,7 +25,7 @@ class BluFairBall(Sprite):
         self.AnimRight.play()
         # Explode animation
         self.explodeAnim = pyganim.PygAnimation(EXPLODE)
-        self.explodeAnim.play()
+        # self.explodeAnim.play()
         # Target
         self.target = None
         # Damage
@@ -43,8 +42,11 @@ class BluFairBall(Sprite):
                 if collide_rect(self, self.target):
                     self.image.set_colorkey((255, 255, 255))
                     self.explodeAnim.blit(self.image)
+                    self.explodeAnim.play()
                     self.target.hero_damage(self.damage)
                     self.attacks = False
+                    if self.explodeAnim.isFinished():
+                        pass
 
             if self.x_vel > 0:
                 self.rect.x += self.SKILL_SPEED
@@ -93,3 +95,5 @@ class Arrow(BluFairBall):
 
         self.AnimRight = pyganim.PygAnimation(ARROW_RIGHT)
         self.AnimRight.play()
+
+        self.damage = 15

@@ -52,7 +52,7 @@ class BaseClass(Sprite):
         # On ground
         self.onGround = False
         # Font for display health
-        self.my_font = SysFont("None", 20, True)
+        self.my_font = SysFont("None", 30, True)
 
     def update(self, left, right, block_group):
         if not self.dead:
@@ -78,7 +78,7 @@ class BaseClass(Sprite):
             self.collide_x(block_group)
             # Animation
             if self.screen:
-                self.screen.blit(self.render, (self.rect.x + 15, self.rect.y - 80))
+                self.screen.blit(self.render, (self.rect.x + 5, self.rect.y - 80))
             if self.x_vel < 0:
                 self.moveLeft_anim.blit(self.image)
             if self.x_vel > 0:

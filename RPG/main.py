@@ -1,6 +1,6 @@
 from sys import exit
+from my_gui.PyGame.RPG.heros import Archer, Wizard
 import pygame
-from my_gui.PyGame.RPG.heros import Wizard, Archer
 from pygame.locals import *
 from my_gui.PyGame.RPG.make_level import create_level
 
@@ -117,5 +117,4 @@ class InitGame:
             pygame.display.flip()
 
 
-if __name__ == '__main__':
-    game = InitGame()
+game = InitGame()

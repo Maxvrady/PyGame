@@ -1,5 +1,4 @@
 from pygame.sprite import Sprite
-from pygame import Surface
 from pygame.image import load
 
 
@@ -54,6 +53,14 @@ class Bottom(HellCenter):
     def __init__(self, x, y):
         HellCenter.__init__(self, x, y)
         self.image = load('RPG/item/ground/bottom.png')
+        # self.image.set_colorkey((255, 255, 255))
+
+
+class Top(Bottom):
+    def __init__(self, x, y):
+        Bottom.__init__(self, x, y)
+        self.image = load('RPG/item/ground/Top.png').convert()
+        self.image.set_colorkey((255, 255, 255))
 
 
 class Table(TreeOne):
