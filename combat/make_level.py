@@ -1,4 +1,4 @@
-from my_gui.PyGame.RPG.scene_item import HellCenter, HellLeft, HellRight, TreeOne, Bottom, TreeTwo, Table, Top
+from scene_item import HellCenter, HellLeft, HellRight, TreeOne, Bottom, TreeTwo, Table, Top
 
 
 level = [

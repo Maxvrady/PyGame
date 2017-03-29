@@ -16,7 +16,7 @@ class BluFairBall(Sprite):
         self.rect.y = 10
         self.x_vel = 0
         self.attacks = False
-        self.icon_path = 'RPG/item/wizard/icon/stage0.png'
+        self.icon_path = 'item/wizard/icon/stage0.png'
         # Left anim.
         self.AnimLeft = pyganim.PygAnimation(FAIR_BALL_LEFT)
         self.AnimLeft.play()
@@ -75,7 +75,7 @@ class DarkBall(BluFairBall):
         BluFairBall.__init__(self)
         self.image = Surface((50, 53))
         self.image.set_colorkey((255, 255, 255))
-        self.icon_path = 'RPG/item/wizard/icon/stage1.png'
+        self.icon_path = 'item/wizard/icon/stage1.png'
         self.AnimLeft = pyganim.PygAnimation(DARK_BALL)
         self.AnimLeft.play()
 
@@ -89,7 +89,7 @@ class Arrow(BluFairBall):
         self.image = Surface((50, 8))
         self.image.set_colorkey((255, 255, 255))
         self.SKILL_SPEED += 10
-        self.icon_path = 'RPG/item/archer/icon/stage0.png'
+        self.icon_path = 'item/archer/icon/stage0.png'
         self.AnimLeft = pyganim.PygAnimation(ARROW_LEFT)
         self.AnimLeft.play()
 

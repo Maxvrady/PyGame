@@ -5,7 +5,7 @@ from pygame.image import load
 class HellRight(Sprite):
     def __init__(self, x, y):
         Sprite.__init__(self)
-        self.image = load('RPG/item/ground/hell_right.png')
+        self.image = load('item/ground/hell_right.png')
 
         self.rect = self.image.get_rect()
         self.rect.x = x
@@ -15,7 +15,7 @@ class HellRight(Sprite):
 class HellCenter(Sprite):
     def __init__(self, x, y):
         Sprite.__init__(self)
-        self.image = load('RPG/item/ground/hell_center.png')
+        self.image = load('item/ground/hell_center.png')
 
         self.rect = self.image.get_rect()
         self.rect.x = x
@@ -25,7 +25,7 @@ class HellCenter(Sprite):
 class HellLeft(Sprite):
     def __init__(self, x, y):
         Sprite.__init__(self)
-        self.image = load('RPG/item/ground/hell_left.png')
+        self.image = load('item/ground/hell_left.png')
 
         self.rect = self.image.get_rect()
         self.rect.x = x
@@ -35,7 +35,7 @@ class HellLeft(Sprite):
 class TreeOne(Sprite):
     def __init__(self, x, y):
         Sprite.__init__(self)
-        self.image = load('RPG/item/ground/tree0.png')
+        self.image = load('item/ground/tree0.png')
         self.image.set_colorkey((255, 255, 255))
         self.rect = self.image.get_rect()
         self.rect.x = x
@@ -45,26 +45,26 @@ class TreeOne(Sprite):
 class TreeTwo(TreeOne):
     def __init__(self, x, y):
         TreeOne.__init__(self, x, y - 50)
-        self.image = load('RPG/item/ground/tree1.png')
+        self.image = load('item/ground/tree1.png')
         self.image.set_colorkey((255, 255, 255))
 
 
 class Bottom(HellCenter):
     def __init__(self, x, y):
         HellCenter.__init__(self, x, y)
-        self.image = load('RPG/item/ground/bottom.png')
+        self.image = load('item/ground/bottom.png')
         # self.image.set_colorkey((255, 255, 255))
 
 
 class Top(Bottom):
     def __init__(self, x, y):
         Bottom.__init__(self, x, y)
-        self.image = load('RPG/item/ground/Top.png').convert()
+        self.image = load('item/ground/Top.png').convert()
         self.image.set_colorkey((255, 255, 255))
 
 
 class Table(TreeOne):
     def __init__(self, x, y):
         TreeOne.__init__(self, x, y + 90)
-        self.image = load('RPG/item/ground/Table0.png')
+        self.image = load('item/ground/Table0.png')
         self.image.set_colorkey((255, 255, 255))

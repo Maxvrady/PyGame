@@ -1,8 +1,8 @@
 from sys import exit
-from my_gui.PyGame.RPG.heros import Archer, Wizard
+from combat import Archer, Wizard
 import pygame
 from pygame.locals import *
-from my_gui.PyGame.RPG.make_level import create_level
+from combat import create_level
 
 
 class InitGame:
